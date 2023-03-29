@@ -1,26 +1,74 @@
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <title>Astro</title>
-    </head>
-    <body>
-         <a href="/">Home</a>
-        <a href="/about/">About</a>
-        <a href="/blog/">Blog</a>
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/global.css";
 
-        <h1>My Astro Site</h1>
-        <h1>About Me</h1>
-        <h2>... and my new Astro Site</h2>
-        <p>
-            I am working through Astro's introductory tutorial. This is the second page on my website, and it's the
-            first one I built myself!
-        </p>
-        <p>
-            This site will update as I complete more of the tutorial, so keep checking back and see how my journey is
-            going!
-        </p>
-    </body>
-</html>
+const pageTitle = "About Me";
+
+const identity = {
+    firstName: "Konrad",
+    country: "Germany",
+    occupation: "Educator",
+    hobbies: ["gym", "computer"],
+};
+
+const skills = ["HTML", "CSS", "JavasScript", "Astro"];
+
+const happy = true;
+const finished = false;
+const goal = 3;
+
+const skillColor = "green";
+const fontWeight = "bold";
+const textCase = "capitalize";
+---
+
+<style define:vars={{ skillColor, fontWeight, textCase }}>
+    h1 {
+        color: purple;
+        font-size: 4rem;
+    }
+    .skill {
+        color: var(--skillColor);
+        font-weight: var(--fontWeight);
+        text-transform: var(--textCase);
+    }
+</style>
+
+<BaseLayout pageTitle={pageTitle}>
+    <h2>... und meine neue Astro-Site</h2>
+    <p>
+        Ich arbeite mich gerade durch Astros Einführungslehrgang. Dies ist die zweite Seite auf meiner Website, und es
+        ist die erste, die ich selbst erstellt habe!
+    </p>
+    <p>
+        Diese Seite wird nach und nach aktualisiert, wenn ich weitere Teile des Tutorials fertiggestellt habe, also
+        schauen Sie immer wieder vorbei, um zu sehen, wie meine Reise verläuft geht!
+    </p>
+
+    {happy && <p>Ich freue mich dass ich Astro lerne!</p>}
+    {finished && <p>Ich habe das Tutorial beendent!</p>}
+    {
+        goal == 3 ? (
+            <p>Mein Ziel ist es das Tutorial in 3 Tagen fertig zu stellen</p>
+        ) : (
+            <p>Mein Ziel ist es nicht das Tutorial in 3 Tagen fertig zu stellen.</p>
+        )
+    }
+
+    <p>Hier sind einige Fakten über mich:</p>
+    <ul>
+        <li>Mein Name ist {identity.firstName}.</li>
+        <li>Ich leben in {identity.country} und arbeite als {identity.occupation}.</li>
+        {
+            identity.hobbies.length > 1 && (
+                <li>
+                    Zwei von meinen Hobbies sind {identity.hobbies[0]} und {identity.hobbies[1]}.
+                </li>
+            )
+        }
+    </ul>
+    <p>Meine Kenntnisse:</p>
+    <ul>
+        {skills.map((skill) => <li class="skill">{skill}</li>)}
+    </ul>
+</BaseLayout>
